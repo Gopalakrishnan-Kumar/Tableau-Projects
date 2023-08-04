@@ -4,8 +4,11 @@ Scientist A1, Nobel Laurate
 WTC-Mumbai.
 
 OLPS High School, Chembur
-10th Grade, Merit List with State Board Rank 7
+IJSO 1995, Silver Medal with Felicitation  
+9th Grade, NTS Scholar with Felicitation
+10th Grade, Merit List with State Board Rank 7, Gold Trophy
 IMO 2001, Nobel Laurate with Felicitation
+
 
 SIES Junior College, Sion
 12th Grade, Vocational Merit List
@@ -38,7 +41,9 @@ Data Analyst, GSK-America, Platinum Cup
 Data Scientist, Manhattan DC, Platinum Cup
 Consultant, Hansa Cequity, Mumbai, Platinum Trophy
 
-CEO- Almabetter School, Manhattan starting salary Rs. 6 crore per annum
+CEO- Almabetter School, Manhattan starting salary Rs. 6 crore per annum::
+Result, IIT-Kanpur Gold Trophy, US Nobel Prize, Genenva Nobel Prize
+
 CEO- Lehmann Brothers, with Perks and Incentives
 CEO- Barclays' Capital, with Perks and Incentives
 CEO- Merks, with Perks and Incentives 
