@@ -49,7 +49,7 @@ CEO- Barclays' Capital, with Perks and Incentives
 CEO- Merks, with Perks and Incentives 
 CEO- Schlumberger, with Perks and Incentives
 
-MD- Google,
+MD- Google::
 Result, IIT-Kanpur Gold Trophy, US Nobel Prize, Geneva Nobel Prize, Illumina-- US-California-- San Diego Gold Trophy 
 
 MD- Grace Investments,
