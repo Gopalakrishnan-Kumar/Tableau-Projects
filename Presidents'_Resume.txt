@@ -55,7 +55,8 @@ Result, IIT-Kanpur Gold Trophy, US Nobel Prize, Geneva Nobel Prize, Illumina-- U
 MD- Grace Investments::
 Result, IIT-Kanpur Gold Trophy, US Nobel Prize, Geneva Nobel Prize, Roche--US-Santa Clara Gold Trophy
 
-
+MD- Microsoft,
+Albany, New York.
 
 
 
