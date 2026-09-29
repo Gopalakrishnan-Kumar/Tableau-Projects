@@ -1,0 +1,369 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartBank - Banking Services</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #063970;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: #0b5cad;
+            color: white;
+            padding: 80px 8%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #063970;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 50px 8%;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #063970;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #0b5cad;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            line-height: 1.6;
+        }
+
+        .loan {
+            background: #e9f2ff;
+        }
+
+        .contact {
+            background: white;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #063970;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0b5cad;
+        }
+
+        footer {
+            background: #063970;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">SmartBank</div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#accounts">Accounts</a>
+            <a href="#loans">Loans</a>
+            <a href="#digital">Digital Banking</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Home -->
+    <section class="hero" id="home">
+        <h1>Welcome to SmartBank</h1>
+
+        <p>
+            Simple, Secure and Smart Banking for Everyone
+        </p>
+
+        <a href="#accounts" class="btn">
+            Explore Banking Services
+        </a>
+    </section>
+
+    <!-- Banking Accounts -->
+    <section id="accounts">
+        <h2>Banking Accounts</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Savings Account</h3>
+                <p>
+                    Manage your everyday savings with convenient
+                    banking services and easy access to your money.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Current Account</h3>
+                <p>
+                    Designed for businesses and customers who
+                    require frequent transactions.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Fixed Deposit</h3>
+                <p>
+                    Invest your money for a fixed period and
+                    earn interest according to the applicable rate.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Recurring Deposit</h3>
+                <p>
+                    Save a fixed amount regularly and build your
+                    savings over time.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Loans -->
+    <section class="loan" id="loans">
+        <h2>Loan Services</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Home Loan</h3>
+                <p>
+                    Financing options for purchasing,
+                    constructing or renovating a home.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Personal Loan</h3>
+                <p>
+                    Personal financing for eligible customers
+                    based on applicable banking criteria.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Education Loan</h3>
+                <p>
+                    Financial assistance for eligible
+                    educational expenses.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Business Loan</h3>
+                <p>
+                    Financing solutions designed to support
+                    eligible business requirements.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Digital Banking -->
+    <section id="digital">
+        <h2>Digital Banking</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Internet Banking</h3>
+                <p>
+                    Access your banking services online from
+                    your computer or mobile device.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Mobile Banking</h3>
+                <p>
+                    Check balances, transfer funds and manage
+                    banking services through a mobile application.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>UPI Payments</h3>
+                <p>
+                    Make convenient digital payments using
+                    supported UPI services.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>ATM Services</h3>
+                <p>
+                    Withdraw cash and access supported
+                    banking services through ATMs.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+
+        <h2>Contact Us</h2>
+
+        <form>
+
+            <input
+                type="text"
+                placeholder="Enter your name"
+                required
+            >
+
+            <input
+                type="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <input
+                type="tel"
+                placeholder="Enter your phone number"
+            >
+
+            <textarea
+                rows="5"
+                placeholder="Enter your message"
+            ></textarea>
+
+            <button type="submit">
+                Submit
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            © 2026 SmartBank | Banking Services Website
+        </p>
+
+        <p>
+            Secure Banking • Digital Banking • Financial Services
+        </p>
+    </footer>
+
+</body>
+</html>
+```
