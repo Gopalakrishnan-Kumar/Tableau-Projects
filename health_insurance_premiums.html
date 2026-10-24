@@ -1,0 +1,398 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore health insurance plans, wellness guidance, and an illustrative premium calculator.">
+  <title>HealthSure | Health & Insurance Premiums</title>
+  <style>
+    :root {
+      --navy: #12304a;
+      --blue: #1677c8;
+      --teal: #20b7a5;
+      --pale: #eff8fb;
+      --ink: #243746;
+      --muted: #607584;
+      --white: #fff;
+      --line: #dce8ee;
+      --shadow: 0 12px 32px rgba(18,48,74,.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--ink); line-height: 1.6; background: #fbfdfe; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, 92%); margin: auto; }
+    header { background: var(--white); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-size: 1.3rem; font-weight: 800; color: var(--navy); letter-spacing: -.4px; }
+    .brand span { color: var(--teal); }
+    nav { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    nav a { font-size: .94rem; font-weight: 600; color: #405a6c; }
+    nav a:hover { color: var(--blue); }
+    .btn { display: inline-block; border: 0; border-radius: 10px; padding: 12px 18px; font-weight: 700; cursor: pointer; background: var(--blue); color: white; transition: .2s; }
+    .btn:hover { filter: brightness(.94); transform: translateY(-1px); }
+    .btn.secondary { background: white; color: var(--navy); border: 1px solid var(--line); }
+    .hero { background: linear-gradient(120deg, #eff9fc 0%, #f7fbff 55%, #e6f8f4 100%); padding: 74px 0 68px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 42px; align-items: center; }
+    .eyebrow { display: inline-block; background: #d9f6ef; color: #087f70; padding: 6px 11px; border-radius: 999px; font-size: .82rem; font-weight: 800; }
+    h1 { font-size: clamp(2.25rem, 5vw, 3.8rem); line-height: 1.1; letter-spacing: -1.7px; color: var(--navy); margin: 18px 0; }
+    h2 { color: var(--navy); font-size: clamp(1.75rem, 3vw, 2.4rem); line-height: 1.2; margin: 0 0 14px; }
+    h3 { color: var(--navy); margin: 0 0 8px; }
+    .lead { color: var(--muted); font-size: 1.1rem; max-width: 600px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+    .hero-art { min-height: 320px; display: grid; place-items: center; position: relative; }
+    .health-card { background: white; border: 1px solid #e1edf1; border-radius: 24px; padding: 28px; width: min(100%, 360px); box-shadow: var(--shadow); position: relative; }
+    .heart { width: 88px; height: 88px; display: grid; place-items: center; border-radius: 24px; background: #e1f8f3; color: #0b9e8b; font-size: 2.7rem; margin-bottom: 18px; }
+    .mini-stat { display: flex; justify-content: space-between; align-items: center; background: var(--pale); padding: 12px 14px; border-radius: 12px; margin-top: 12px; gap: 10px; }
+    .mini-stat strong { color: var(--blue); }
+    section { padding: 72px 0; }
+    .section-head { max-width: 700px; margin: 0 auto 34px; text-align: center; }
+    .section-head p { color: var(--muted); margin: 0; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 25px; box-shadow: 0 5px 20px rgba(18,48,74,.035); }
+    .feature-icon { width: 48px; height: 48px; display: grid; place-items: center; background: #e8f5ff; color: var(--blue); border-radius: 14px; font-size: 1.45rem; margin-bottom: 15px; }
+    .card p { color: var(--muted); margin: 0; }
+    .calculator-section { background: var(--pale); }
+    .calc-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 28px; align-items: start; }
+    .form-card { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 28px; box-shadow: var(--shadow); }
+    .field { margin-bottom: 18px; }
+    label { display: block; font-weight: 700; margin-bottom: 7px; font-size: .95rem; }
+    input, select, textarea { width: 100%; padding: 12px 13px; border: 1px solid #cddde5; border-radius: 9px; font: inherit; color: var(--ink); background: white; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid #a9dcfa; border-color: var(--blue); }
+    .result { background: var(--navy); color: white; border-radius: 18px; padding: 30px; min-height: 100%; }
+    .result h3 { color: white; }
+    .result-label { color: #c4d9e7; margin: 20px 0 4px; }
+    .price { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.2; }
+    .result small { color: #c4d9e7; }
+    .result-breakdown { margin-top: 22px; border-top: 1px solid #3c566c; padding-top: 16px; }
+    .breakdown-row { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; }
+    .note { font-size: .84rem; color: var(--muted); margin-top: 14px; }
+    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+    .plan { position: relative; }
+    .plan.featured { border: 2px solid var(--teal); transform: translateY(-7px); }
+    .plan-tag { display: inline-block; font-size: .75rem; font-weight: 800; color: #087f70; background: #dcf8f0; padding: 5px 9px; border-radius: 999px; margin-bottom: 12px; }
+    .plan-price { font-size: 1.85rem; font-weight: 800; color: var(--navy); margin: 12px 0 0; }
+    .plan-price span { font-size: .9rem; color: var(--muted); font-weight: 500; }
+    .plan ul { padding-left: 20px; color: var(--muted); min-height: 120px; }
+    .plan li { margin: 8px 0; }
+    .health-band { background: linear-gradient(120deg, #12304a, #185b75); color: white; border-radius: 22px; padding: 36px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; }
+    .health-band h2 { color: white; }
+    .health-band p { color: #d1e5ed; }
+    .health-tips { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .tip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14); padding: 14px; border-radius: 12px; }
+    .tip strong { display: block; margin-bottom: 4px; }
+    .enquiry { background: #f2f8fb; }
+    .enquiry-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 30px; align-items: start; }
+    .contact-info p { color: var(--muted); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .success { display: none; padding: 12px; border-radius: 9px; background: #e0f8ed; color: #086b4c; margin-top: 14px; }
+    footer { background: #0d2437; color: #d2e1ea; padding: 28px 0; font-size: .9rem; }
+    .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .disclaimer { font-size: .8rem; color: #91a9b9; max-width: 760px; }
+    @media (max-width: 820px) {
+      .hero-grid, .calc-grid, .health-band, .enquiry-grid { grid-template-columns: 1fr; }
+      .hero { padding: 54px 0; }
+      .hero-art { min-height: 250px; }
+      .features, .plans { grid-template-columns: 1fr; }
+      .plan.featured { transform: none; }
+      nav { gap: 12px; }
+      .nav { padding: 14px 0; align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 520px) {
+      section { padding: 52px 0; }
+      .form-row, .health-tips { grid-template-columns: 1fr; }
+      .form-card, .card { padding: 21px; }
+      .health-band { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home">Health<span>Sure</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#benefits">Benefits</a>
+        <a href="#calculator">Premium Calculator</a>
+        <a href="#plans">Plans</a>
+        <a href="#wellness">Health Tips</a>
+        <a class="btn" href="#enquiry">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">HEALTH FIRST. PLAN SMARTER.</span>
+          <h1>Better health starts with a better plan.</h1>
+          <p class="lead">Understand health insurance, explore coverage options, and estimate a sample premium—all in one simple place.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#calculator">Calculate a Premium</a>
+            <a class="btn secondary" href="#plans">Explore Plans</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Health coverage illustration">
+          <div class="health-card">
+            <div class="heart">✚</div>
+            <h3>Your health, your priority</h3>
+            <p>Prepare for unexpected medical expenses with coverage that fits your needs.</p>
+            <div class="mini-stat"><span>Coverage planning</span><strong>Made simple</strong></div>
+            <div class="mini-stat"><span>Wellness guidance</span><strong>Every day</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why consider health insurance?</h2>
+          <p>A suitable policy can help manage eligible medical costs and make healthcare expenses more predictable.</p>
+        </div>
+        <div class="features">
+          <article class="card">
+            <div class="feature-icon">♥</div>
+            <h3>Financial protection</h3>
+            <p>Eligible hospitalisation and treatment costs may be covered, subject to policy terms, limits, and exclusions.</p>
+          </article>
+          <article class="card">
+            <div class="feature-icon">⌂</div>
+            <h3>Family coverage</h3>
+            <p>Compare individual and family-floater options to find an approach that suits your household.</p>
+          </article>
+          <article class="card">
+            <div class="feature-icon">✓</div>
+            <h3>Informed decisions</h3>
+            <p>Review waiting periods, co-payments, room limits, network hospitals, and claim procedures before choosing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="calculator-section" id="calculator">
+      <div class="container">
+        <div class="section-head">
+          <h2>Health insurance premium calculator</h2>
+          <p>Change the inputs to see an illustrative annual premium estimate. This is a demonstration formula, not a quote from an insurer.</p>
+        </div>
+        <div class="calc-grid">
+          <form class="form-card" id="premiumForm">
+            <div class="field">
+              <label for="age">Age of oldest insured person</label>
+              <input id="age" type="number" min="18" max="100" value="30" required>
+            </div>
+            <div class="field">
+              <label for="coverage">Coverage amount (sum insured)</label>
+              <select id="coverage">
+                <option value="300000">₹3 lakh</option>
+                <option value="500000" selected>₹5 lakh</option>
+                <option value="1000000">₹10 lakh</option>
+                <option value="2000000">₹20 lakh</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="members">Number of people covered</label>
+              <select id="members">
+                <option value="1">1 person</option>
+                <option value="2" selected>2 people</option>
+                <option value="3">3 people</option>
+                <option value="4">4 people</option>
+                <option value="5">5 people</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="planType">Illustrative plan type</label>
+              <select id="planType">
+                <option value="1">Basic</option>
+                <option value="1.35" selected>Standard</option>
+                <option value="1.8">Enhanced</option>
+              </select>
+            </div>
+            <button class="btn" type="submit">Estimate Premium</button>
+            <p class="note">For demonstration only. Actual premiums may vary significantly by insurer and individual risk factors.</p>
+          </form>
+          <div class="result" aria-live="polite">
+            <h3>Your sample estimate</h3>
+            <p class="result-label">Estimated annual premium</p>
+            <div class="price" id="annualPremium">₹12,150</div>
+            <p><small id="monthlyPremium">About ₹1,013 per month, if divided evenly.</small></p>
+            <div class="result-breakdown">
+              <div class="breakdown-row"><span>Base estimate</span><strong id="basePremium">₹9,000</strong></div>
+              <div class="breakdown-row"><span>Age factor</span><strong id="ageFactor">1.00×</strong></div>
+              <div class="breakdown-row"><span>Family factor</span><strong id="familyFactor">1.00×</strong></div>
+              <div class="breakdown-row"><span>Plan factor</span><strong id="selectedPlanFactor">1.35×</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plans">
+      <div class="container">
+        <div class="section-head">
+          <h2>Explore sample plan levels</h2>
+          <p>These are illustrative feature categories, not products offered by a specific insurer.</p>
+        </div>
+        <div class="plans">
+          <article class="card plan">
+            <span class="plan-tag">ESSENTIAL</span>
+            <h3>Basic Care</h3>
+            <p>For people starting their coverage research.</p>
+            <div class="plan-price">From ₹X,XXX <span>/ year*</span></div>
+            <ul>
+              <li>Core hospitalisation benefits</li>
+              <li>Defined coverage limits</li>
+              <li>Review exclusions carefully</li>
+            </ul>
+            <a class="btn secondary" href="#enquiry">Ask about options</a>
+          </article>
+          <article class="card plan featured">
+            <span class="plan-tag">POPULAR CATEGORY</span>
+            <h3>Standard Care</h3>
+            <p>A balanced category to compare coverage and cost.</p>
+            <div class="plan-price">From ₹X,XXX <span>/ year*</span></div>
+            <ul>
+              <li>Broader coverage options may be available</li>
+              <li>Check network hospitals</li>
+              <li>Compare co-pay and room limits</li>
+            </ul>
+            <a class="btn" href="#calculator">Calculate estimate</a>
+          </article>
+          <article class="card plan">
+            <span class="plan-tag">EXTENDED</span>
+            <h3>Enhanced Care</h3>
+            <p>For those comparing higher cover amounts and added benefits.</p>
+            <div class="plan-price">From ₹X,XXX <span>/ year*</span></div>
+            <ul>
+              <li>Higher sum-insured options</li>
+              <li>Optional benefits may be available</li>
+              <li>Read benefit caps and exclusions</li>
+            </ul>
+            <a class="btn secondary" href="#enquiry">Ask about options</a>
+          </article>
+        </div>
+        <p class="note">*Placeholder pricing intentionally shown; replace with verified insurer quotations before publishing.</p>
+      </div>
+    </section>
+
+    <section id="wellness">
+      <div class="container">
+        <div class="health-band">
+          <div>
+            <h2>Support your health every day</h2>
+            <p>Insurance is one part of planning for healthcare. Healthy routines and appropriate preventive care matter, too.</p>
+            <a class="btn" href="#enquiry" style="background:#20b7a5">Ask a question</a>
+          </div>
+          <div class="health-tips">
+            <div class="tip"><strong>🥗 Balanced meals</strong><span>Choose varied, nutritious foods.</span></div>
+            <div class="tip"><strong>🚶 Regular movement</strong><span>Build activity into your routine.</span></div>
+            <div class="tip"><strong>😴 Rest and recovery</strong><span>Prioritise consistent sleep.</span></div>
+            <div class="tip"><strong>🩺 Preventive care</strong><span>Discuss suitable check-ups with a clinician.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="enquiry" id="enquiry">
+      <div class="container enquiry-grid">
+        <div class="contact-info">
+          <h2>Have a question?</h2>
+          <p>Use this demo form to practise collecting enquiries about health insurance and premium estimates.</p>
+          <p><strong>Before selecting a policy:</strong> read the policy wording, benefit schedule, exclusions, waiting periods, and claim conditions. Confirm details directly with the insurer or a licensed intermediary.</p>
+        </div>
+        <form class="form-card" id="enquiryForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="fullName">Full name</label>
+              <input id="fullName" type="text" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="interest">What would you like to know?</label>
+            <select id="interest">
+              <option>Premium estimate</option>
+              <option>Individual health insurance</option>
+              <option>Family health insurance</option>
+              <option>Understanding policy terms</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" rows="4" placeholder="Write your question here..."></textarea>
+          </div>
+          <button class="btn" type="submit">Submit Enquiry</button>
+          <div class="success" id="formSuccess" role="status">Demo submission received in this page. No information has been sent to a server.</div>
+          <p class="note">This front-end demo does not store or transmit personal information. Connect a secure backend before using it with real customers. Do not enter medical or other sensitive personal information into this demo.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div><strong>HealthSure</strong> · Health & Insurance Premiums</div>
+      <div class="disclaimer">Educational demo only. Not medical, financial, or insurance advice. Premium calculations and plan descriptions are illustrative. Coverage is governed by the actual policy terms and insurer decisions.</div>
+      <div>© <span id="year"></span> HealthSure</div>
+    </div>
+  </footer>
+
+  <script>
+    const money = value => new Intl.NumberFormat('en-IN', {
+      style: 'currency', currency: 'INR', maximumFractionDigits: 0
+    }).format(value);
+
+    function calculatePremium() {
+      const age = Number(document.getElementById('age').value);
+      const coverage = Number(document.getElementById('coverage').value);
+      const members = Number(document.getElementById('members').value);
+      const planFactor = Number(document.getElementById('planType').value);
+
+      if (!Number.isFinite(age) || age < 18 || age > 100) {
+        document.getElementById('age').setCustomValidity('Enter an age from 18 to 100.');
+        document.getElementById('age').reportValidity();
+        return;
+      }
+      document.getElementById('age').setCustomValidity('');
+
+      // Illustrative assumptions only; this is not an insurer pricing model.
+      const basePremium = coverage * 0.018;
+      const ageFactor = age < 30 ? 0.9 : age < 45 ? 1 : age < 60 ? 1.45 : 2.15;
+      const familyFactor = 1 + Math.max(0, members - 1) * 0.22;
+      const annual = Math.round(basePremium * ageFactor * familyFactor * planFactor);
+
+      document.getElementById('annualPremium').textContent = money(annual);
+      document.getElementById('monthlyPremium').textContent = 'About ' + money(annual / 12) + ' per month, if divided evenly.';
+      document.getElementById('basePremium').textContent = money(basePremium);
+      document.getElementById('ageFactor').textContent = ageFactor.toFixed(2) + '×';
+      document.getElementById('familyFactor').textContent = familyFactor.toFixed(2) + '×';
+      document.getElementById('selectedPlanFactor').textContent = planFactor.toFixed(2) + '×';
+    }
+
+    document.getElementById('premiumForm').addEventListener('submit', event => {
+      event.preventDefault();
+      calculatePremium();
+    });
+    ['age', 'coverage', 'members', 'planType'].forEach(id => {
+      document.getElementById(id).addEventListener('change', calculatePremium);
+    });
+
+    document.getElementById('enquiryForm').addEventListener('submit', event => {
+      event.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+    calculatePremium();
+  </script>
+</body>
+</html>
+'''
+path = Path("/mnt/data/health_insurance_premiums.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created: {path} ({path.stat().st_size:,} bytes)")
